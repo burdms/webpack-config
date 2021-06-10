@@ -1,6 +1,8 @@
+import '../css/style.css';
+
 const fn = () => {
   const str = 'World';
-  alert(`Hello ${str}`);
+  console.log(`Hello ${str}`);
 };
 
 fn();
