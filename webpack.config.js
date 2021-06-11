@@ -56,7 +56,7 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/i,
+        test: /\.(c|sa|sc)ss$/i,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -65,12 +65,26 @@ module.exports = {
             },
           },
           'css-loader',
+          'sass-loader',
         ],
+      },
+      {
+        test: /\.html$/i,
+        use: {
+          loader: 'html-loader',
+        },
       },
     ],
   },
   devServer: {
     contentBase: './build',
     open: true,
+    port: 3000,
+    hot: true,
+    compress: true,
+    overlay: true,
+    writeToDisk: false,
+    historyApiFallback: true,
   },
+  devtool: isDev && 'source-map',
 };
