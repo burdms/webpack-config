@@ -74,6 +74,15 @@ module.exports = {
           loader: 'html-loader',
         },
       },
+      {
+        test: /\.pug$/i,
+        use: {
+          loader: 'pug-loader',
+          options: {
+            pretty: true,
+          }
+        },
+      },
     ],
   },
   devServer: {
