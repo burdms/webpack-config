@@ -7,26 +7,35 @@ const mode = process.env.NODE_ENV;
 
 const isDev = mode === 'development';
 
+const PATHS = {
+  src: path.join(__dirname, './src'),
+  build: path.join(__dirname, './build'),
+}
+
 const generateFilename = (ext) =>
   isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
 
 module.exports = {
+  externals: {
+    paths: PATHS,
+  },
   entry: {
-    main: './index.js',
+    main: `${PATHS.src}/index.js`,
   },
   output: {
     filename: `./scripts/${generateFilename('js')}`,
-    path: path.resolve(__dirname, 'build'),
+    path: PATHS.build,
     clean: true,
     environment: {
       arrowFunction: false,
     },
   },
+  target: isDev ? 'web' : 'browserslist',
   mode,
-  context: path.resolve(__dirname, 'src'),
+  context: PATHS.src,
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: `${PATHS.src}/index.html`,
       minify: {
         collapseWhitespace: !isDev,
       },
@@ -34,8 +43,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'src/resources'),
-          to: path.resolve(__dirname, 'build'),
+          from: `${PATHS.src}/resources`,
+          to: PATHS.build,
         },
       ],
     }),
@@ -84,15 +93,4 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    contentBase: './build',
-    open: true,
-    port: 3000,
-    hot: true,
-    compress: true,
-    overlay: true,
-    writeToDisk: false,
-    historyApiFallback: true,
-  },
-  devtool: isDev && 'source-map',
 };
