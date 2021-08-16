@@ -1,7 +1,10 @@
 # Global
 node_modules
 build
+dist
+public
 
 # Local
 .prettierignore
+.prettierrc
 .eslintrc

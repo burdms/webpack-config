@@ -8,9 +8,9 @@ const mode = process.env.NODE_ENV;
 const isDev = mode === 'development';
 
 const PATHS = {
-  src: path.join(__dirname, './src'),
-  build: path.join(__dirname, './build'),
-}
+  src: path.join(__dirname, '../src'),
+  build: path.join(__dirname, '../build'),
+};
 
 const generateFilename = (ext) =>
   isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
@@ -23,12 +23,13 @@ module.exports = {
     main: `${PATHS.src}/index.js`,
   },
   output: {
-    filename: `./scripts/${generateFilename('js')}`,
+    filename: `scripts/${generateFilename('js')}`,
     path: PATHS.build,
     clean: true,
     environment: {
       arrowFunction: false,
     },
+    assetModuleFilename: 'images/[hash][ext][query]',
   },
   target: isDev ? 'web' : 'browserslist',
   mode,
@@ -49,7 +50,7 @@ module.exports = {
       ],
     }),
     new MiniCssExtractPlugin({
-      filename: `./styles/${generateFilename('css')}`,
+      filename: `styles/${generateFilename('css')}`,
     }),
   ],
   module: {
@@ -78,7 +79,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               'postcssOptions': {
-                'config': path.resolve(__dirname, 'postcss.config.js'),
+                'config': path.resolve(__dirname, '../postcss.config.js'),
               },
             }
           },
@@ -90,6 +91,14 @@ module.exports = {
         use: {
           loader: 'html-loader',
         },
+      },
+      {
+        test: /\.(?:gif|png|jpg|jpeg)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset/inline',
       },
     ],
   },
