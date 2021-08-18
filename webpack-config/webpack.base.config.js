@@ -10,6 +10,7 @@ const isDev = mode === 'development';
 const PATHS = {
   src: path.join(__dirname, '../src'),
   build: path.join(__dirname, '../build'),
+  assets: 'assets',
 };
 
 const generateFilename = (ext) =>
@@ -29,7 +30,18 @@ module.exports = {
     environment: {
       arrowFunction: false,
     },
-    assetModuleFilename: 'images/[hash][ext][query]',
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: 'vendors',
+          test: /node_modules/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
   },
   target: isDev ? 'web' : 'browserslist',
   mode,
@@ -95,10 +107,20 @@ module.exports = {
       {
         test: /\.(?:gif|png|jpg|jpeg)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'images/[hash][ext][query]',
+        },
       },
       {
         test: /\.svg$/,
         type: 'asset/inline',
+      },
+      {
+        test: /\.(woff(2)?|eot|ttf|otf|)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[hash][ext][query]',
+        },
       },
     ],
   },
