@@ -38,6 +38,7 @@ module.exports = {
   output: {
     filename: `${PATHS.assets}/scripts/${generateFilename('js')}`,
     path: PATHS.build,
+    publicPath: '/',
     clean: true,
     environment: {
       arrowFunction: false,
