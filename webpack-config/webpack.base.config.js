@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 const mode = process.env.NODE_ENV;
 
@@ -24,7 +25,7 @@ module.exports = {
     main: `${PATHS.src}/index.js`,
   },
   output: {
-    filename: `scripts/${generateFilename('js')}`,
+    filename: `${PATHS.assets}/scripts/${generateFilename('js')}`,
     path: PATHS.build,
     clean: true,
     environment: {
@@ -46,6 +47,11 @@ module.exports = {
   target: isDev ? 'web' : 'browserslist',
   mode,
   context: PATHS.src,
+  resolve: {
+    alias: {
+      '~': 'src',
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: `${PATHS.src}/index.html`,
@@ -56,14 +62,23 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: `${PATHS.src}/resources`,
+          from: `${PATHS.src}/static`,
           to: PATHS.build,
         },
       ],
     }),
     new MiniCssExtractPlugin({
-      filename: `styles/${generateFilename('css')}`,
+      filename: `${PATHS.assets}/styles/${generateFilename('css')}`,
     }),
+    // new ImageMinimizerPlugin({
+    //   minimizerOptions: {
+    //     plugins: [
+    //       ["gifsicle", { interlaced: true }],
+    //       ["jpegtran", { progressive: true }],
+    //       ["optipng", { optimizationLevel: 5 }],
+    //     ],
+    //   },
+    // }),
   ],
   module: {
     rules: [
@@ -108,7 +123,7 @@ module.exports = {
         test: /\.(?:gif|png|jpg|jpeg)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'images/[hash][ext][query]',
+          filename: `${PATHS.assets}/images/[hash][ext][query]`,
         },
       },
       {
@@ -119,7 +134,7 @@ module.exports = {
         test: /\.(woff(2)?|eot|ttf|otf|)$/,
         type: 'asset/resource',
         generator: {
-          filename: 'fonts/[hash][ext][query]',
+          filename: `${PATHS.assets}/fonts/[hash][ext][query]`,
         },
       },
     ],
