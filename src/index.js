@@ -1,5 +1,5 @@
 import './assets/styles/style.scss';
-import './scripts/main.js';
+import './assets/scripts/main.js';
 
 // import './index.html';
 // import './test.html';
