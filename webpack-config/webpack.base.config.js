@@ -1,4 +1,6 @@
 const path = require('path');
+const fs = require('fs');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -13,6 +15,15 @@ const PATHS = {
   build: path.join(__dirname, '../build'),
   assets: 'assets',
 };
+
+// For regular html pages
+// const PAGES_DIR = `${PATHS.src}`;
+// const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.html'));
+
+// For pug pages
+const PAGES_DIR = `${PATHS.src}/pug/pages`;
+const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'));
+
 
 const generateFilename = (ext) =>
   isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
@@ -53,12 +64,16 @@ module.exports = {
     },
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: `${PATHS.src}/index.html`,
-      minify: {
-        collapseWhitespace: !isDev,
-      },
-    }),
+    // For pug pages
+    ...PAGES.map(page => new HtmlWebpackPlugin({
+      template: `${PAGES_DIR}/${page}`,
+      filename: `./${page.replace(/\.pug/, '.html')}`
+    })),
+    // For regular html pages
+    // ...PAGES.map(page => new HtmlWebpackPlugin({
+    //   template: `${PAGES_DIR}/${page}`,
+    //   filename: `./${page}`,
+    // })),
     new CopyPlugin({
       patterns: [
         {
@@ -117,6 +132,12 @@ module.exports = {
         test: /\.html$/i,
         use: {
           loader: 'html-loader',
+        },
+      },
+      {
+        test: /\.pug$/i,
+        use: {
+          loader: 'pug-loader',
         },
       },
       {
