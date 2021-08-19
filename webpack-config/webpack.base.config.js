@@ -16,11 +16,6 @@ const PATHS = {
   assets: 'assets',
 };
 
-// For regular html pages
-// const PAGES_DIR = `${PATHS.src}`;
-// const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.html'));
-
-// For pug pages
 const PAGES_DIR = `${PATHS.src}/pug/pages`;
 const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'));
 
@@ -65,16 +60,10 @@ module.exports = {
     },
   },
   plugins: [
-    // For pug pages
     ...PAGES.map(page => new HtmlWebpackPlugin({
       template: `${PAGES_DIR}/${page}`,
-      filename: `./${page.replace(/\.pug/, '.html')}`
+      filename: `./${page.replace(/\.pug/, '.html')}`,
     })),
-    // For regular html pages
-    // ...PAGES.map(page => new HtmlWebpackPlugin({
-    //   template: `${PAGES_DIR}/${page}`,
-    //   filename: `./${page}`,
-    // })),
     new CopyPlugin({
       patterns: [
         {
