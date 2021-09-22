@@ -16,7 +16,7 @@ const PATHS = {
   assets: 'assets',
 };
 
-const PAGES_DIR = `${PATHS.src}/pug/pages`;
+const PAGES_DIR = `${PATHS.src}/views/pages`;
 const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'));
 
 
@@ -67,7 +67,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: `${PATHS.assets}/static`,
+          from: `${PATHS.src}/static`,
           to: PATHS.build,
           noErrorOnMissing: true,
         },

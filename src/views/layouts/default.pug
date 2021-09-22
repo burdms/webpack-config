@@ -1,0 +1,21 @@
+doctype html
+
+block vars
+include ../utils/_mixins
+
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    title= page.title ? page.title : 'New page'
+
+  body(class= page.class ? page.class : '')
+    block header
+      include ../partials/_header
+
+    main.main
+      block main
+
+    block footer
+      include ../partials/_footer
