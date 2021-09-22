@@ -67,8 +67,9 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: `${PATHS.src}/static`,
+          from: `${PATHS.assets}/static`,
           to: PATHS.build,
+          noErrorOnMissing: true,
         },
       ],
     }),
