@@ -1,0 +1,40 @@
+body {
+  font-family: $primaryFont;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: $black;
+  background-color: $white;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1400px;
+  width: 100%;
+}
+
+.no-scroll {
+  overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: $red;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $red;
+}
+::-webkit-scrollbar-track {
+  background: $grey;
+  border-radius: 0px;
+  box-shadow: inset 7px 10px 12px $grey;
+}
+
+::selection {
+  background: $grey;
+}

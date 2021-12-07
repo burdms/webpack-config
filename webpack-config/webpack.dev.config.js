@@ -7,7 +7,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     contentBase: baseWebpackConfig.externals.paths.build,
     open: true,
     port: 3000,
-    // hot: true,
+    hot: true,
     compress: true,
     overlay: true,
     writeToDisk: false,

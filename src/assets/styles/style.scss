@@ -1,3 +1,16 @@
-@import "fonts";
-@import "new";
-@import "new1";
+// Resets
+@import "utils/normalize";
+@import "utils/reset";
+
+// Utils
+@import "utils/vars";
+@import "utils/mixins";
+@import "utils/fonts";
+
+// Global UI
+@import "global/settings";
+@import "global/ui";
+@import "global/header";
+@import "global/footer";
+
+// Styles

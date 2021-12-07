@@ -20,8 +20,8 @@ const PAGES_DIR = `${PATHS.src}/views/pages`;
 const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'));
 
 
-const generateFilename = (ext) =>
-  isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
+const generateFilename = ext =>
+  (isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`);
 
 module.exports = {
   externals: {
@@ -33,7 +33,7 @@ module.exports = {
   output: {
     filename: `${PATHS.assets}/scripts/${generateFilename('js')}`,
     path: PATHS.build,
-    publicPath: '/',
+    publicPath: isDev ? '/' : './',
     clean: true,
     environment: {
       arrowFunction: false,
@@ -68,7 +68,7 @@ module.exports = {
       patterns: [
         {
           from: `${PATHS.src}/static`,
-          to: PATHS.build,
+          to: PATHS.assets,
           noErrorOnMissing: true,
         },
       ],
@@ -104,7 +104,7 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '/',
+              publicPath: isDev ? '/' : '../../',
             },
           },
           'css-loader',
@@ -135,7 +135,9 @@ module.exports = {
         test: /\.(?:gif|png|jpg|jpeg)$/i,
         type: 'asset/resource',
         generator: {
-          filename: `${PATHS.assets}/images/[hash][ext][query]`,
+          filename: isDev ?
+            `${PATHS.assets}/images/[name][ext]` :
+            `${PATHS.assets}/images/[hash][ext][query]`,
         },
       },
       {
